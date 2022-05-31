@@ -1,0 +1,48 @@
+easyboot:
+  doc:
+    author: 73483930@qq.com
+    description: Easy Boot
+    name: '@project.name@'
+    url: http://www.easyboot.com
+    version: '@project.version@'
+  file:
+    store-type: local
+  database:
+    hikari:
+      connection-timeout: 5000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      maximum-pool-size: 100
+      minimum-idle: 3
+      validation-timeout: 3000
+server:
+  tomcat:
+    accesslog:
+      max-days: 2
+      pattern: '%t %{X-Forwarded-For}i %a %r %s %D %{X-Trace-Id}o'
+spring:
+  cache:
+    caffeine:
+      spec: maximumSize=1000,expireAfterAccess=300s
+    type: caffeine
+  freemarker:
+    checkTemplateLocation: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 10
+        max-wait: 10s
+        min-idle: 1
+        time-between-eviction-runs: 1m
+    timeout: 5s
+  session:
+    store-type: redis
+springfox:
+  documentation:
+    auto-startup: false
+    enabled: false
+

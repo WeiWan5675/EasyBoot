@@ -1,0 +1,69 @@
+package com.weiwan.easyboot.model.entity;
+
+import java.util.List;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+ * 用户信息
+ *
+ * @author easyboot-generator 2021年1月16日 下午11:55:54
+ */
+@ApiModel
+@Data
+public class SysUser extends BaseEntity<Integer> {
+
+    @ApiModelProperty(value = "部门")
+    private Integer deptId;
+
+    @ApiModelProperty(value = "登录名", required = true)
+    @NotBlank
+    @Size(max = 50)
+    private String username;
+
+    @ApiModelProperty(value = "密码,新增必输")
+    // @NotBlank
+    @Size(max = 100)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+
+    @ApiModelProperty(value = "姓名", required = true)
+    @NotBlank
+    @Size(max = 50)
+    private String name;
+
+    @ApiModelProperty(value = "手机")
+    private String mobile;
+
+    @ApiModelProperty(value = "头像")
+    private String photo;
+
+    @ApiModelProperty(value = "邮件")
+    private String email;
+    @ApiModelProperty(value = "openId")
+    @JsonIgnore
+    private String openId;
+    @ApiModelProperty(value = "unionId")
+    @JsonIgnore
+    private String unionId;
+
+    /**
+     * 以下为扩展字段
+     */
+    @ApiModelProperty(value = "父部门名称(只显示)")
+    private String deptName;
+
+    @ApiModelProperty(value = "头像url(只显示)")
+    private String photoUrl;
+
+    @ApiModelProperty(value = "角色")
+    private List<Integer> roleIds;
+}

@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: local
+#  redis:
+#    database: 1
+#  session:
+#    redis:
+#      namespace: admin
+#    timeout: 2h
+wx:
+  miniapp:
+    appid: none
+

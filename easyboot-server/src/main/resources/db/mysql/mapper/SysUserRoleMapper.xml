@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwan.easyboot.mapper.SysUserRoleDao">
+
+    <select id="selectRoleIdsByUserId" parameterType="Integer" resultType="Integer">
+        select t.role_id from sys_user_role t where t.user_id = #{userId}
+    </select>
+
+    <select id="selectUserIdsByRoleId" parameterType="Integer" resultType="Integer">
+        select t.user_id from sys_user_role t where t.role_id = #{roleId}
+    </select>
+
+    <delete id="deleteByUser">
+        delete t from sys_user_role t
+        where t.user_id in
+        <foreach item="item" collection="array" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByRole">
+        delete t from sys_user_role t
+        where t.role_id in
+        <foreach item="item" collection="array" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="deleteByRoleAndUser">
+        delete t from sys_user_role t
+        where t.role_id = #{roleId} and t.user_id in
+        <foreach item="item" collection="userIds" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert">
+        insert into sys_user_role (user_id,role_id)
+        values
+        <foreach item="item" collection="array" separator=",">
+            (#{item.userId},#{item.roleId})
+        </foreach>
+    </insert>
+
+</mapper>

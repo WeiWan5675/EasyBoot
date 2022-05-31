@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwan.easyboot.mapper.SysLoginLogMapper">
+    <resultMap id="BaseResultMap" type="com.weiwan.easyboot.model.entity.SysLoginLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="result" jdbcType="TINYINT" property="result"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="user_agent" jdbcType="VARCHAR" property="userAgent"/>
+        <result column="device_name" jdbcType="VARCHAR" property="deviceName"/>
+        <result column="browser_name" jdbcType="VARCHAR" property="browserName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t.id,t.user_id,t.user_name,t.result,t.login_time,t.ip,t.area,t.user_agent,t.device_name,t.browser_name
+    </sql>
+
+    <sql id="Query_Table">
+        sys_login_log t
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        where t.id = #{id}
+    </select>
+
+    <select id="selectByQuery" parameterType="com.weiwan.easyboot.model.entity.SysLoginLogQuery"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        <where>
+            <if test="query.userId != null">
+                and t.user_id = #{query.userId}
+            </if>
+            <if test="query.userName != null and query.userName != ''">
+                and t.user_name = #{query.userName}
+            </if>
+            <if test="query.result != null">
+                and t.result = #{query.result}
+            </if>
+            <if test="query.loginDateRange != null and query.loginDateRange.length == 2">
+                <![CDATA[
+                and (t.login_time > #{query.loginDateRange[0],javaType=String} and t.login_time < date_add(#{query.loginDateRange[1],javaType=String}, interval 1 day))
+			    ]]>
+            </if>
+            <if test="query.ip != null and query.ip != ''">
+                and t.ip = #{query.ip}
+            </if>
+        </where>
+        <choose>
+            <when test="query.sortField != null and query.sortField != '' and query.sortOrder != null and query.sortOrder !=''">
+                order by ${query.sortField} ${query.sortOrder}
+            </when>
+            <otherwise>
+                order by t.login_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        delete t from sys_login_log t
+        where t.id in
+        <foreach item="item" collection="array" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert">
+        insert into sys_login_log (user_id,user_name,result,login_time,ip,area,user_agent,device_name,browser_name)
+        values
+        <foreach item="item" collection="array" separator=",">
+            (#{item.userId},#{item.userName},#{item.result},#{item.loginTime},#{item.ip},#{item.area},#{item.userAgent},#{item.deviceName},#{item.browserName})
+        </foreach>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.weiwan.easyboot.model.entity.SysLoginLog">
+        update sys_login_log t
+        <set>
+            <if test="userId != null">
+                t.user_id = #{userId},
+            </if>
+            <if test="userName != null">
+                t.user_name = #{userName},
+            </if>
+            <if test="result != null">
+                t.result = #{result},
+            </if>
+            <if test="loginTime != null">
+                t.login_time = #{loginTime},
+            </if>
+            <if test="ip != null">
+                t.ip = #{ip},
+            </if>
+            <if test="area != null">
+                t.area = #{area},
+            </if>
+            <if test="userAgent != null">
+                t.user_agent = #{userAgent},
+            </if>
+            <if test="deviceName != null">
+                t.device_name = #{deviceName},
+            </if>
+            <if test="browserName != null">
+                t.browser_name = #{browserName}
+            </if>
+        </set>
+        where t.id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.weiwan.easyboot.model.entity.SysLoginLog">
+        update sys_login_log t set
+        t.user_id = #{userId}
+        ,t.user_name = #{userName}
+        ,t.result = #{result}
+        ,t.login_time = #{loginTime}
+        ,t.ip = #{ip}
+        ,t.area = #{area}
+        ,t.user_agent = #{userAgent}
+        ,t.device_name = #{deviceName}
+        ,t.browser_name = #{browserName}
+        where t.id = #{id}
+    </update>
+</mapper>

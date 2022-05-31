@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwan.easyboot.mapper.SysFileMapper">
+    <resultMap id="BaseResultMap" type="com.weiwan.easyboot.model.entity.SysFile">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="content_type" jdbcType="VARCHAR" property="contentType"/>
+        <result column="file_size" jdbcType="INTEGER" property="fileSize"/>
+        <result column="relative_path" jdbcType="VARCHAR" property="relativePath"/>
+        <result column="create_by" jdbcType="INTEGER" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t.id,t.name,t.content_type,t.file_size,t.relative_path,t.create_by,t.create_time,t.update_by,t.update_time,t.remarks
+    </sql>
+
+    <sql id="Query_Table">
+        sys_file t
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        where t.id = #{id}
+    </select>
+
+    <select id="selectByQuery" parameterType="com.weiwan.easyboot.model.entity.SysFileQuery"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        <where>
+            <if test="query.name != null and query.name != ''">
+                name like concat('%',#{query.name},'%')
+            </if>
+            <if test="query.relativePath != null and query.relativePath != ''">
+                and t.relative_path = #{query.relativePath}
+            </if>
+            <if test="query.createDateRange != null and query.createDateRange.length == 2">
+                <![CDATA[
+                and (t.create_time > #{query.createDateRange[0],javaType=String} and t.create_time < date_add(#{query.createDateRange[1],javaType=String}, interval 1 day))
+			    ]]>
+            </if>
+            <if test="query.ids !=null and query.ids.size() > 0">
+                and t.id in
+                <foreach item="id" collection="query.ids" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        <choose>
+            <when test="query.sortField != null and query.sortField != '' and query.sortOrder != null and query.sortOrder !=''">
+                order by ${query.sortField} ${query.sortOrder}
+            </when>
+            <otherwise>
+                order by t.create_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        delete t from sys_file t
+        where t.id in
+        <foreach item="item" collection="array" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert">
+        insert into sys_file
+        (id,name,content_type,file_size,relative_path,create_by,create_time,update_by,update_time,remarks)
+        values
+        <foreach item="item" collection="array" separator=",">
+            (#{item.id},#{item.name},#{item.contentType},#{item.fileSize},#{item.relativePath},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.remarks})
+        </foreach>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.weiwan.easyboot.model.entity.SysFileQuery">
+        update sys_file t
+        <set>
+            <if test="name != null">
+                t.name = #{name},
+            </if>
+            <if test="contentType != null">
+                t.content_type = #{contentType},
+            </if>
+            <if test="fileSize != null">
+                t.file_size = #{fileSize},
+            </if>
+            <if test="relativePath != null">
+                t.relative_path = #{relativePath},
+            </if>
+            <if test="updateBy != null">
+                t.update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                t.update_time = #{updateTime},
+            </if>
+            <if test="remarks != null">
+                t.remarks = #{remarks}
+            </if>
+        </set>
+        where t.id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.weiwan.easyboot.model.entity.SysFileQuery">
+        update sys_file t set
+        t.name = #{name}
+        ,t.content_type = #{contentType}
+        ,t.file_size = #{fileSize}
+        ,t.relative_path = #{relativePath}
+        ,t.update_by = #{updateBy}
+        ,t.update_time = #{updateTime}
+        ,t.remarks = #{remarks}
+        where t.id = #{id}
+    </update>
+</mapper>

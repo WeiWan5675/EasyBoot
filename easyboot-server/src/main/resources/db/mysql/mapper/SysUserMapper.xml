@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwan.easyboot.mapper.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.weiwan.easyboot.model.entity.SysUser">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="union_id" jdbcType="VARCHAR" property="unionId"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_by" jdbcType="INTEGER" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <!--        join-->
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t.id, IF(d.name is null, null, t.dept_id) as
+        dept_id,t.username,t.password,t.name,t.mobile,t.photo,t.email,t.open_id,t.union_id,
+        t.status,t.create_by,t.create_time,t.update_by,t.update_time,t.remarks,
+        d.name dept_name
+
+    </sql>
+
+    <sql id="Query_Table">
+        sys_user t left join sys_dept d on t.dept_id = d.id
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        where t.id = #{id}
+    </select>
+
+    <select id="selectByQuery" parameterType="com.weiwan.easyboot.model.entity.SysUserQuery"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        <where>
+            <if test="query.deptId != null">
+                and t.dept_id = #{query.deptId}
+            </if>
+            <if test="query.username != null and query.username != ''">
+                and t.username = #{query.username}
+            </if>
+            <if test="query.mobile != null and query.mobile != ''">
+                and t.mobile = #{query.mobile}
+            </if>
+            <if test="query.openId != null and query.openId != '' ">
+                and t.open_id = #{query.openId}
+            </if>
+            <if test="query.unionId != null and query.unionId != '' ">
+                and t.union_id = #{query.unionId}
+            </if>
+            <if test="query.name != null and query.name != ''">
+                and t.name = #{query.name}
+            </if>
+            <if test="query.status != null">
+                and t.status = #{query.status}
+            </if>
+            <if test="query.roleId != null">
+                and
+                <choose>
+                    <when test="query.hasThisRole != null and !query.hasThisRole">
+                        not exists
+                    </when>
+                    <otherwise>
+                        exists
+                    </otherwise>
+                </choose>
+                (select 1 from sys_user_role sur where sur.user_id = t.id and sur.role_id = #{query.roleId}
+                and sur.role_id = #{query.roleId})
+            </if>
+        </where>
+        <choose>
+            <when test="query.sortField != null and query.sortField != '' and query.sortOrder != null and query.sortOrder !=''">
+                order by ${query.sortField} ${query.sortOrder}
+            </when>
+            <otherwise>
+                order by t.create_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        delete t from sys_user t
+        where t.id in
+        <foreach item="item" collection="array" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user
+        (dept_id,username,password,name,mobile,photo,email,open_id,union_id,status,create_by,create_time,update_by,update_time,remarks)
+        values
+        <foreach item="item" collection="array" separator=",">
+            (#{item.deptId},#{item.username},#{item.password},#{item.name},#{item.mobile},#{item.photo},#{item.email},#{item.openId},#{item.unionId},#{item.status},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime},#{item.remarks})
+        </foreach>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.weiwan.easyboot.model.entity.SysUser">
+        update sys_user t
+        <set>
+            <if test="deptId != null">
+                t.dept_id = #{deptId},
+            </if>
+            <if test="username != null">
+                t.username = #{username},
+            </if>
+            <if test="password != null">
+                t.password = #{password},
+            </if>
+            <if test="name != null">
+                t.name = #{name},
+            </if>
+            <if test="mobile != null">
+                t.mobile = #{mobile},
+            </if>
+            <if test="photo != null">
+                t.photo = #{photo},
+            </if>
+            <if test="email != null">
+                t.email = #{email},
+            </if>
+            <if test="openId != null">
+                t.open_id = #{openId},
+            </if>
+            <if test="unionId != null">
+                t.union_id = #{unionId},
+            </if>
+            <if test="status != null">
+                t.status = #{status},
+            </if>
+            <if test="updateBy != null">
+                t.update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                t.update_time = #{updateTime},
+            </if>
+            <if test="remarks != null">
+                t.remarks = #{remarks}
+            </if>
+        </set>
+        where t.id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.weiwan.easyboot.model.entity.SysUser">
+        update sys_user t set
+        t.dept_id = #{deptId}
+        ,t.username = #{username}
+        ,t.password = #{password}
+        ,t.name = #{name}
+        ,t.mobile = #{mobile}
+        ,t.photo = #{photo}
+        ,t.email = #{email}
+        ,t.open_id = #{openId}
+        ,t.union_id = #{unionId}
+        ,t.status = #{status}
+        ,t.update_by = #{updateBy}
+        ,t.update_time = #{updateTime}
+        ,t.remarks = #{remarks}
+        where t.id = #{id}
+    </update>
+</mapper>

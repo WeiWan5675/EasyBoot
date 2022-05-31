@@ -1,0 +1,71 @@
+package com.weiwan.easyboot.security;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.weiwan.easyboot.model.dto.UserInfo;
+
+import lombok.RequiredArgsConstructor;
+
+/**
+ * @author hdf
+ */
+@RequiredArgsConstructor
+public class AdminUserDetails implements UserDetails {
+
+    private static final long serialVersionUID = -1;
+
+    private final UserInfo userInfo;
+    private final String username;
+    private final String passowrd;
+    private boolean locked;
+
+    private List<GrantedAuthority> authorities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return passowrd;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+}

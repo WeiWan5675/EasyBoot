@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiwan.easyboot.mapper.SysParamMapper">
+    <resultMap id="BaseResultMap" type="com.weiwan.easyboot.model.entity.SysParam">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="param_key" jdbcType="VARCHAR" property="paramKey"/>
+        <result column="param_value" jdbcType="VARCHAR" property="paramValue"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_by" jdbcType="INTEGER" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        t.id, t.name, t.param_key, t.param_value, t.status, t.create_by, t.create_time, t.update_by, t.update_time,
+        t.remarks
+    </sql>
+    <sql id="Query_Table">
+        sys_param t
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        where t.id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByQuery" parameterType="com.weiwan.easyboot.model.entity.AbstractQuery"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Query_Table"/>
+        <where>
+            <if test="query.paramKey != null and query.paramKey != ''">
+                t.param_key = #{query.paramKey}
+            </if>
+            <if test="query.name != null and query.name != ''">
+                and t.name like concat('%',#{query.name},'%')
+            </if>
+            <if test="query.status != null">
+                and t.status = #{query.status}
+            </if>
+        </where>
+        <choose>
+            <when test="query.sortField != null and query.sortField != '' and query.sortOrder != null and query.sortOrder !=''">
+                order by ${query.sortField} ${query.sortOrder}
+            </when>
+            <otherwise>
+                order by t.create_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        delete t from sys_param t
+        where t.id in
+        <foreach item="item" collection="array" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_param ( name, param_key,
+        param_value, status, create_by,
+        create_time, update_by, update_time,
+        remarks)
+        values
+        <foreach item="item" collection="array" separator=",">
+            (#{item.name,jdbcType=VARCHAR}, #{item.paramKey,jdbcType=VARCHAR},
+            #{item.paramValue,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, #{item.createBy,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=INTEGER},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.remarks,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.weiwan.easyboot.model.entity.SysParam">
+        update sys_param t
+        <set>
+            <if test="name != null">
+                t.name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="paramKey != null">
+                t.param_key = #{paramKey,jdbcType=VARCHAR},
+            </if>
+            <if test="paramValue != null">
+                t.param_value = #{paramValue,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                t.status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createBy != null">
+                t.create_by = #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                t.create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                t.update_by = #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                t.update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                t.remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where t.id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.weiwan.easyboot.model.entity.SysParam">
+        update sys_param t
+        t.set name = #{name,jdbcType=VARCHAR},
+        t.param_key = #{paramKey,jdbcType=VARCHAR},
+        t.param_value = #{paramValue,jdbcType=VARCHAR},
+        t.status = #{status,jdbcType=TINYINT},
+        t.create_by = #{createBy,jdbcType=INTEGER},
+        t.create_time = #{createTime,jdbcType=TIMESTAMP},
+        t.update_by = #{updateBy,jdbcType=INTEGER},
+        t.update_time = #{updateTime,jdbcType=TIMESTAMP},
+        t.remarks = #{remarks,jdbcType=VARCHAR}
+        where t.id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
