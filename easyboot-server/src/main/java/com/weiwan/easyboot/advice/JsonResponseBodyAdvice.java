@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.config;
+package com.weiwan.easyboot.advice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
@@ -15,7 +15,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @ControllerAdvice
 @Slf4j

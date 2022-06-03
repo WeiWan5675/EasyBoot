@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * 分页条件
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class PageQuery extends AbstractQuery {
 

@@ -3,7 +3,7 @@ package com.weiwan.easyboot.event;
 import com.google.common.eventbus.EventBus;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public class AdminEventBus {
 

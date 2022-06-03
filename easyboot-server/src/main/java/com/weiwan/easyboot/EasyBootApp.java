@@ -1,32 +1,39 @@
 package com.weiwan.easyboot;
 
 
-import com.weiwan.easyboot.component.YamlPropertySourceFactory;
 import com.weiwan.easyboot.config.BootProperties;
+import com.weiwan.easyboot.utils.YamlPropertySourceFactory;
+import com.weiwan.easyboot.web.WebConfig;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /**
  * 程序入口
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @SpringBootApplication()
-@EnableConfigurationProperties({BootProperties.class})
-@ServletComponentScan(basePackages = {"com.weiwan.easyboot.web.*"})
 @PropertySource(value = {"classpath:application-default.yaml"}, factory = YamlPropertySourceFactory.class)
 @EnableAsync
-@EnableAspectJAutoProxy(proxyTargetClass=true)
-public class AdminMain {
+@EnableOpenApi
+@EnableConfigurationProperties({BootProperties.class})
+@ServletComponentScan(basePackages = {"com.weiwan.easyboot.web.*"})
+@MapperScan({"com.weiwan.easyboot.mapper"})
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@Import({WebConfig.class, BeanValidatorPluginsConfiguration.class})
+public class EasyBootApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(AdminMain.class, args);
+        SpringApplication.run(EasyBootApp.class, args);
     }
 }
+

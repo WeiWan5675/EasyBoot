@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  *
  * eg. <code>@SortField({"updateTime:t.update_time"})</code>
  *
- * @author hdf
+ * @author xiaozhennan
  * @date 2020/6/19 8:11 下午
  */
 @Target({ElementType.TYPE})

@@ -4,7 +4,7 @@ package com.weiwan.easyboot.common;
  * 错误码及响应信息结构
  *
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class CodeMsg {
 

@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
 /**
  * 包含基本CRUD定义，DAO 完成基础字段验证
  *
- * @author hdf
+ * @author xiaozhennan
  * @param <T>
  *            DB 实体
  * @param <PK>
@@ -52,8 +52,8 @@ public interface CrudMapper<T extends BaseEntity<PK>, PK> extends BaseMapper<T> 
      * @param condition
      * @return
      */
-    List<T> selectByQuery(Page<T> page, @Param("query") AbstractQuery condition);
-    List<T> selectByQuery(@Param("query") AbstractQuery condition);
+    List<T> selectByQuery(Page<T> page, @Param("query") AbstractQuery query);
+    List<T> selectByQuery(@Param("query") AbstractQuery query);
     /**
      * 选择性更新
      *

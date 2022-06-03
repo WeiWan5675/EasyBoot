@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @Data
 @SortField({"updateTime:t.update_time"})

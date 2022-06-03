@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 默认返回403的够用，复写的原因是为了打印accessDenied时候的日志信息便于定位
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Slf4j
 public class AdminAccessDeniedHandler extends AccessDeniedHandlerImpl {

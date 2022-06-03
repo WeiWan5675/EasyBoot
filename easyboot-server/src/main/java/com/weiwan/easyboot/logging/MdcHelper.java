@@ -7,7 +7,7 @@ import org.slf4j.MDC;
 /**
  * MDC 信息埋点
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class MdcHelper {
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 监听spring boot 初始化完成，可以对外服务开始事件
  *
- * @author hdf
+ * @author xiaozhennan
  * @see <a href=
  *      "https://docs.spring.io/spring-boot/docs/2.3.4.RELEASE/reference/htmlsingle/#boot-features-application-events-and-listeners">boot-features-application-events-and-listeners</a>
  */

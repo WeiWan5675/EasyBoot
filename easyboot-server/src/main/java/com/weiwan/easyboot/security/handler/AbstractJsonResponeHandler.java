@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.config;
+package com.weiwan.easyboot.security.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,7 @@ import com.weiwan.easyboot.common.Result;
 /**
  * 返回json 格式respone
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public abstract class AbstractJsonResponeHandler {
 

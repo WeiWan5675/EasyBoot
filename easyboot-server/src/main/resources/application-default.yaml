@@ -7,6 +7,11 @@ easyboot:
     version: '@project.version@'
   file:
     store-type: local
+
+  login:
+    lockStorage: redis
+    lock-time: 30000
+
   database:
     hikari:
       connection-timeout: 5000

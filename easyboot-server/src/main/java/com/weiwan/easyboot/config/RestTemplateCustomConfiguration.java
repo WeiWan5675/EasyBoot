@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.component;
+package com.weiwan.easyboot.config;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 优化原生无连接池问题
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Configuration
 @RequiredArgsConstructor

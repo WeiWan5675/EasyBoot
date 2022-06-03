@@ -15,7 +15,7 @@ import org.springframework.util.Assert;
  *      &#64;PreAuthorize("hasRole('admin')")
  * </code>
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class UserGrantedAuthority implements GrantedAuthority {
     private static final String DEFAULT_ROLE_PREFIX = "ROLE_";

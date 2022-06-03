@@ -60,7 +60,7 @@ import lombok.RequiredArgsConstructor;
  *
  *      默认的安全设置参考{@link WebSecurityConfigurerAdapter#getHttp}
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -263,7 +263,7 @@ import com.seezoon.framework.utils.IpUtil;
 /**
  * 用户加载逻辑
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class AdminUserDetailsServiceImpl implements UserDetailsService {
 

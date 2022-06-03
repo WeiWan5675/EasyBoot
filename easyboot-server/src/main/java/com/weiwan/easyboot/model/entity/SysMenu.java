@@ -24,7 +24,7 @@ public class SysMenu extends BaseEntity<Integer> {
     public static final int MENU_TYPE_BUTTON = 3;
 
     public static final String TARGET_MAIN = "main";
-    public static final String DEFAULT_HOME = "/db/mysql/mapper/home";
+    public static final String DEFAULT_HOME = "/sys/home";
 
     @ApiModelProperty(value = "上级", required = true)
     @NotNull

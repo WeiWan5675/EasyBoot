@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * 事务粒度过大，但是方便，对于高性能要求的项目不要在父类加
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Transactional(rollbackFor = Exception.class)
 public abstract class AbstractTransactionService extends AbstractBaseService {

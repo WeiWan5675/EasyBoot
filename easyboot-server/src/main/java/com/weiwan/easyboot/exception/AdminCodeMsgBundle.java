@@ -7,7 +7,7 @@ import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
  * admin 端需要标准的错误码，非强制，在开发效率与可维护性之间找平衡，统一有利于国际化及后续监控支持
  *
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class AdminCodeMsgBundle extends DefaultCodeMsgBundle {
 

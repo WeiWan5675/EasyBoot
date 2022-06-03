@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @see <a href=
  *      "https://docs.spring.io/spring-boot/docs/2.3.4.RELEASE/reference/htmlsingle/#boot-features-application-events-and-listeners">boot-features-application-events-and-listeners</a>
- * @author hdf
+ * @author xiaozhennan
  */
 @Configuration
 public class ApplicationStartingEventListener implements ApplicationListener<ApplicationStartingEvent> {

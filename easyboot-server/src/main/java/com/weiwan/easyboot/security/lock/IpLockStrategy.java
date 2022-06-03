@@ -5,14 +5,14 @@ import java.time.Duration;
 import org.springframework.data.redis.core.ValueOperations;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public class IpLockStrategy extends AbstractLockStrategy {
 
     private static final String PREFIX = "login_err_cnt_ip_";
 
-    public IpLockStrategy(Duration lockTime, int lockFailTimes, ValueOperations<String, Integer> valueOperations) {
-        super(lockTime, lockFailTimes, valueOperations);
+    public IpLockStrategy(Duration lockTime, int lockFailTimes, LockStateStorage lockStateStorage) {
+        super(lockTime, lockFailTimes, lockStateStorage);
     }
 
     @Override

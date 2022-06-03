@@ -11,7 +11,7 @@ import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
  * 如果业务层次太深，用异常使得结构更合理则可以用
  *
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class BusinessException extends RuntimeException {
 

@@ -15,7 +15,7 @@ import lombok.Data;
 /**
  * 数据库实体基类，框架默认字段，已实际表为准
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Data
 public class BaseEntity<PK> {

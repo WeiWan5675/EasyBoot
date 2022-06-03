@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * 比如可以早于spring security filter的顺序
  *
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Slf4j
 public class RequestFilter implements Filter {

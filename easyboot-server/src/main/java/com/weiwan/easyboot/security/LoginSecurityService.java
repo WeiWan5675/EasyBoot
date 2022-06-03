@@ -2,13 +2,17 @@ package com.weiwan.easyboot.security;
 
 import javax.annotation.Resource;
 
+import com.weiwan.easyboot.component.cache.LocalCacheService;
+import com.weiwan.easyboot.component.cache.LocalCacheServiceImpl;
 import com.weiwan.easyboot.config.BootProperties;
+import com.weiwan.easyboot.model.enums.LockStorageType;
+import com.weiwan.easyboot.security.lock.*;
 import com.weiwan.easyboot.service.AbstractBaseService;
-import com.weiwan.easyboot.security.lock.IpLockStrategy;
-import com.weiwan.easyboot.security.lock.LockStrategy;
-import com.weiwan.easyboot.security.lock.UsernameLockStrategy;
+import com.weiwan.easyboot.utils.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
@@ -17,28 +21,37 @@ import com.weiwan.easyboot.config.BootProperties;
 import lombok.RequiredArgsConstructor;
 
 /**
- *
- * @author hdf
+ * @author xiaozhennan
  */
 @Service
-@RequiredArgsConstructor
 public class LoginSecurityService extends AbstractBaseService implements InitializingBean {
 
-    private final BootProperties bootProperties;
+    @Autowired
+    private BootProperties bootProperties;
+
+    @Autowired
+    private LocalCacheService localCacheService;
+
     private BootProperties.LoginProperties loginProperties;
-    @Resource(name = "redisTemplate")
-    private ValueOperations<String, Integer> valueOperations;
     private LockStrategy usernameLockStrategy;
     private LockStrategy ipLockStrategy;
+    private LockStateStorage lockStateStorage;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        loginProperties = bootProperties.getLogin();
-        usernameLockStrategy = new UsernameLockStrategy(loginProperties.getLockTime(),
-            loginProperties.getLockPasswdFailTimes(), valueOperations);
-        ipLockStrategy =
-            new IpLockStrategy(loginProperties.getLockTime(), loginProperties.getLockIpFailTimes(), valueOperations);
+        this.loginProperties = bootProperties.getLogin();
+        LockStorageType lockStorage = loginProperties.getLockStorage();
+        if (lockStorage == LockStorageType.REDIS) {
+            RedisTemplate<String, Object> redisTemplate = SpringContextHolder.getBean(RedisTemplate.class);
+            lockStateStorage = new RedisLockStateStorage(redisTemplate);
+        } else {
+            lockStateStorage = new CacheLockStateStorage(localCacheService.getCacheManager().getCacheStorage());
+        }
+
+        usernameLockStrategy = new UsernameLockStrategy(loginProperties.getLockTime(), loginProperties.getLockPasswdFailTimes(), lockStateStorage);
+        ipLockStrategy = new IpLockStrategy(loginProperties.getLockTime(), loginProperties.getLockIpFailTimes(), lockStateStorage);
     }
+
 
     public void clear(String username, String ip) {
         if (StringUtils.isNotBlank(username)) {

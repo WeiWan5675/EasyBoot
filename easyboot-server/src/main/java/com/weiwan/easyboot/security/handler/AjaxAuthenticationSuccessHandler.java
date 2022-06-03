@@ -15,12 +15,11 @@ import com.weiwan.easyboot.event.AdminEventBus;
 import com.weiwan.easyboot.security.SecurityUtils;
 import com.weiwan.easyboot.common.Result;
 import com.weiwan.easyboot.utils.IpUtil;
-import com.weiwan.easyboot.config.AbstractJsonResponeHandler;
 
 /**
  * 前后端分离场景下的成功处理
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class AjaxAuthenticationSuccessHandler extends AbstractJsonResponeHandler
     implements AuthenticationSuccessHandler {

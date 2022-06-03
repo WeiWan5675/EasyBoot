@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import net.coobird.thumbnailator.Thumbnails;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public interface FileHandler extends AutoCloseable {
 

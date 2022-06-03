@@ -11,7 +11,7 @@ import com.weiwan.easyboot.model.dto.UserInfo;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @RequiredArgsConstructor
 public class AdminUserDetails implements UserDetails {

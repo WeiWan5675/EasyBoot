@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.config;
+package com.weiwan.easyboot.advice;
 
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @RestControllerAdvice
 public class ParamBindAdvice {

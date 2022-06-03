@@ -11,7 +11,7 @@ import com.weiwan.easyboot.model.entity.SysParam;
 import com.weiwan.easyboot.model.entity.SysParamQuery;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @Service
 public class SysParamService extends AbstractCrudService<SysParamMapper, SysParam, Integer> {

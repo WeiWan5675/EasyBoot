@@ -12,7 +12,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.OSSObject;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public class AliyunOssHandler implements FileHandler {
 

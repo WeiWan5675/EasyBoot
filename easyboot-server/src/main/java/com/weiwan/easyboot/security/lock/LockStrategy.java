@@ -1,7 +1,7 @@
 package com.weiwan.easyboot.security.lock;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public interface LockStrategy {
     long increment(String key);

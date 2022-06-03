@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 
 /**
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Validated
 public abstract class BaseController {

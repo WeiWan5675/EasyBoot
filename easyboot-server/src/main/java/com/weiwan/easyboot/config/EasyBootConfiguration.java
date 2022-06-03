@@ -1,6 +1,6 @@
 package com.weiwan.easyboot.config;
 
-import com.weiwan.easyboot.web.WebConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 
@@ -25,16 +25,13 @@ import springfox.documentation.spring.web.plugins.Docket;
  *
  * 开启简易缓存，主要针对字典及基本配置参数，实时性要求不高的业务进行缓存
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Configuration
-@EnableOpenApi
-@Import({WebConfigurer.class, BeanValidatorPluginsConfiguration.class})
-@EnableCaching
-@RequiredArgsConstructor
 public class EasyBootConfiguration {
 
-    private final BootProperties bootProperties;
+    @Autowired
+    private BootProperties bootProperties;
 
     /**
      * doc 配置 springfox + knife4j

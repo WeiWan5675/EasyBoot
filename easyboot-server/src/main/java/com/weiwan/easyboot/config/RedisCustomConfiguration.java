@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.component;
+package com.weiwan.easyboot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,16 +7,21 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.annotation.Resource;
+
 /**
  * RedisTemplate 等自定义，主要修改序列化方式
  *
- * @author hdf
+ * @author xiaozhennan
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration()
 public class RedisCustomConfiguration {
 
+    @Resource
+    RedisConnectionFactory redisConnectionFactory;
+
     @Bean
-    public RedisTemplate<String, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate<String, ?> redisTemplate() {
         RedisTemplate<String, ?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 

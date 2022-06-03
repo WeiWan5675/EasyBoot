@@ -52,7 +52,7 @@ import com.github.pagehelper.PageHelper;
 import com.seezoon.dao.framework.entity.PageCondition;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @Intercepts({
     @Signature(type = Executor.class, method = "query",

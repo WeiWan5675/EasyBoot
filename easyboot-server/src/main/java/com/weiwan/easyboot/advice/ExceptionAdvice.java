@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.config;
+package com.weiwan.easyboot.advice;
 
 import javax.validation.ConstraintViolationException;
 
@@ -19,7 +19,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 /**
  * 异常advice
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @RestControllerAdvice
 public class ExceptionAdvice {

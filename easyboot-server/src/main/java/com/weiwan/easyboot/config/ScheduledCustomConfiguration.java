@@ -1,9 +1,8 @@
-package com.weiwan.easyboot.component;
+package com.weiwan.easyboot.config;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import com.weiwan.easyboot.config.BootProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;

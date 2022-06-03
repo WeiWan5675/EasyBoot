@@ -3,7 +3,7 @@ package com.weiwan.easyboot.component.file;
 /**
  * 文件存储类型
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public enum StoreType {
     /**

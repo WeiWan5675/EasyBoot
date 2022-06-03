@@ -1,7 +1,7 @@
 package com.weiwan.easyboot.model.enums;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public enum LoginType {
     MP_WEIXIN;

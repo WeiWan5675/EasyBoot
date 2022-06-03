@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.config;
+package com.weiwan.easyboot.advice;
 
 import java.lang.reflect.Type;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 完成RequestBody 参数打印
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Slf4j
 @ControllerAdvice

@@ -17,16 +17,26 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.MapSessionRepository;
+import org.springframework.session.ReactiveMapSessionRepository;
+import org.springframework.session.ReactiveSessionRepository;
+import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
+import org.springframework.session.web.server.session.SpringSessionWebSessionStore;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.spi.CurrencyNameProvider;
 
 /**
  * <code>
@@ -47,7 +57,7 @@ import lombok.RequiredArgsConstructor;
  * <p>
  * 安全配置
  *
- * @author hdf
+ * @author xiaozhennan
  * @see <a>https://docs.spring.io/spring-security/site/docs/5.4.1/reference/html5</a>
  *      <p>
  *      默认的安全设置参考{@link WebSecurityConfigurerAdapter#getHttp}
@@ -66,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_OUT_URL = "/logout";
 
     private final BootProperties bootProperties;
-    private final FindByIndexNameSessionRepository sessionRepository;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -89,7 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http.sessionManagement().maximumSessions(bootProperties.getLogin().getMaximumSessions())
                 .maxSessionsPreventsLogin(bootProperties.getLogin().isMaxSessionsPreventsLogin())
                 // 不使用spring session 不需要指定，默认是内存逻辑
-                .sessionRegistry(new SpringSessionBackedSessionRegistry<>(sessionRepository));
+                .sessionRegistry(new SessionRegistryImpl(new ConcurrentHashMap<>(), new ConcurrentHashMap<>()));
         }
 
         // remember 采用默认解密前端remember-cookie
@@ -160,7 +170,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setUserDetailsService(adminUserDetailsService());
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
         auth.authenticationProvider(daoAuthenticationProvider);
-
         // 只因为下面的没有暴露setHideUserNotFoundExceptions 方法，导致UsernameNotFoundException 被内部转换成BadCredentialsException
         // auth.userDetailsService(adminUserDetailsService()).passwordEncoder(AdminPasswordEncoder.getEncoder());
     }

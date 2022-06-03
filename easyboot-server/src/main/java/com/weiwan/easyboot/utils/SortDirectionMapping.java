@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * DB排序映射,适应不同前端框架
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class SortDirectionMapping {
 

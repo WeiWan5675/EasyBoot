@@ -3,6 +3,7 @@ package com.weiwan.easyboot.config;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,17 +24,19 @@ public class BootDataSourceConfig {
     @Bean()
     @ConfigurationProperties(prefix = "easyboot.database.hikari")
     public HikariDataSource dataSource() {
-        HikariDataSource hikariDataSource = new HikariDataSource();
-        BootProperties.DatabaseProperties database = bootProperties.getDatabase();
-        String url = database.getUrl();
-        String username = database.getUsername();
-        String password = database.getPassword();
-        String schema = database.getSchema();
-        hikariDataSource.setJdbcUrl(url);
-        hikariDataSource.setUsername(username);
-        hikariDataSource.setPassword(password);
-        hikariDataSource.setSchema(schema);
-        return hikariDataSource;
+        BootProperties.DatabaseProperties databaseProperties = bootProperties.getDatabase();
+        String url = databaseProperties.getUrl();
+        String username = databaseProperties.getUsername();
+        String password = databaseProperties.getPassword();
+        String schema = databaseProperties.getSchema();
+        HikariDataSource dataSource = DataSourceBuilder.create()
+                .url(url)
+                .username(username)
+                .password(password)
+                .type(HikariDataSource.class)
+                .build();
+        dataSource.setSchema(schema);
+        return dataSource;
     }
 
 }

@@ -31,15 +31,12 @@ import com.weiwan.easyboot.model.entity.SysRole;
 import com.weiwan.easyboot.model.entity.SysUser;
 import com.weiwan.easyboot.exception.BusinessException;
 import com.weiwan.easyboot.utils.IpUtil;
-
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import lombok.SneakyThrows;
 
 /**
  * 用户加载逻辑
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class AdminUserDetailsServiceImpl implements UserDetailsService {
 
@@ -52,8 +49,6 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private LoginSecurityService loginSecurityService;
 
-    @Autowired
-    private WxMaService wxMaService;
 
     @SneakyThrows
     @Override
@@ -70,11 +65,11 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("username is empty");
         }
 
-        // 获取登录标识
+        // 获取登录标识,这里可以区分登录类型
         final String type = request.getParameter("type");
         SysUser user = null;
         if (StringUtils.isNotEmpty(type)) {
-            user = this.thirdLogin(type, username);
+            user = sysUserService.findByUsername(username);
             if (null == user) {
                 throw new UsernameNotFoundException("user not found");
             }
@@ -108,19 +103,7 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
         return adminUserDetails;
     }
 
-    @SneakyThrows
-    private SysUser thirdLogin(String type, String username) throws UsernameNotFoundException {
-        SysUser user = null;
-        if (LoginType.MP_WEIXIN.name().equals(type)) {
-            WxMaJscode2SessionResult wxMaJscode2SessionResult = wxMaService.jsCode2SessionInfo(username);
-            // 如果是多公众号 小程序 一起用在公众平台绑定后使用unionId.
-            user = sysUserService.findByOpenId(wxMaJscode2SessionResult.getOpenid());
-        } else {
-            throw new BusinessException("un support login type");
-        }
 
-        return user;
-    }
 
     /**
      *

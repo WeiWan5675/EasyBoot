@@ -20,7 +20,7 @@ import com.seezoon.dao.framework.entity.BaseEntity;
 /**
  * 包含基本CRUD定义，DAO 完成基础字段验证
  *
- * @author hdf
+ * @author xiaozhennan
  * @param <T>
  *            DB 实体
  * @param <PK>
@@ -109,7 +109,7 @@ import com.seezoon.framework.utils.IdGen;
 /**
  * 增删改查service
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public abstract class AbstractCrudService<D extends CrudDao<T, PK>, T extends BaseEntity<PK>, PK>
     extends AbstractTransactionService {

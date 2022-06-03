@@ -1,7 +1,7 @@
 package com.weiwan.easyboot.model.constant;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public class LoginResult {
     /**

@@ -2,36 +2,37 @@ package com.weiwan.easyboot.security.lock;
 
 import java.time.Duration;
 
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.Assert;
 
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
-public abstract class AbstractLockStrategy implements LockStrategy  {
+public abstract class AbstractLockStrategy implements LockStrategy {
 
     private final Duration lockTime;
     private final int lockFailTimes;
-    private final ValueOperations<String, Integer> valueOperations;
+    private final LockStateStorage lockStateStorage;
 
-    public AbstractLockStrategy(Duration lockTime, int lockFailTimes, ValueOperations<String, Integer> valueOperations) {
+    public AbstractLockStrategy(Duration lockTime, int lockFailTimes, LockStateStorage lockStateStorage) {
         this.lockTime = lockTime;
         this.lockFailTimes = lockFailTimes;
-        this.valueOperations = valueOperations;
+        this.lockStateStorage = lockStateStorage;
     }
 
     @Override
     public long increment(String key) {
         checkKey(key);
         String wrappedKey = wrapKey(key);
-        if (!valueOperations.getOperations().hasKey(wrappedKey)) {
-            valueOperations.set(wrappedKey, 1, lockTime);
+        if (!lockStateStorage.existKey(wrappedKey)) {
+            lockStateStorage.setKey(wrappedKey, 1);
+            lockStateStorage.expired(wrappedKey, lockTime);
             return 1;
         } else {
-            Long increment = valueOperations.increment(wrappedKey);
-            valueOperations.getOperations().expire(wrappedKey, lockTime);
-            return increment;
+            Integer oldValue = lockStateStorage.getKey(wrappedKey);
+            lockStateStorage.setKey(wrappedKey, oldValue == null ? 1 : oldValue + 1);
+            lockStateStorage.expired(wrappedKey, lockTime);
+            return lockStateStorage.getKey(wrappedKey);
         }
     }
 
@@ -43,7 +44,7 @@ public abstract class AbstractLockStrategy implements LockStrategy  {
     public boolean isLocked(String key) {
         checkKey(key);
         String wrappedKey = wrapKey(key);
-        Integer failCnt = valueOperations.get(wrappedKey);
+        Integer failCnt = lockStateStorage.getKey(wrappedKey);
         if (null != failCnt && failCnt >= lockFailTimes) {
             return true;
         }
@@ -54,7 +55,7 @@ public abstract class AbstractLockStrategy implements LockStrategy  {
     public void clear(String key) {
         checkKey(key);
         String wrappedKey = wrapKey(key);
-        valueOperations.getOperations().delete(wrappedKey);
+        lockStateStorage.deleteKey(wrappedKey);
     }
 
     protected abstract String wrapKey(String key);

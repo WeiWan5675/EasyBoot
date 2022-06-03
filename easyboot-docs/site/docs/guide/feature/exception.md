@@ -28,7 +28,7 @@ import com.seezoon.framework.exception.ServerRuntimeException;
 /**
  * 异常advice
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @RestControllerAdvice
 public class ExceptionAdvice {

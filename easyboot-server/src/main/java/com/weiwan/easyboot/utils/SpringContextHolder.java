@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.component;
+package com.weiwan.easyboot.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

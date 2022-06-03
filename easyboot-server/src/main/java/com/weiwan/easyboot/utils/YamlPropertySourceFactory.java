@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.component;
+package com.weiwan.easyboot.utils;
  
 import java.io.FileNotFoundException;
 import java.io.IOException;

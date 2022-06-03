@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @ApiModel(value = "用户基本信息")
 @RequiredArgsConstructor

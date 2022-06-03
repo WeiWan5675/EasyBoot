@@ -20,7 +20,7 @@
    * <p>
    * mybatis 类型可以不用，mybatis自动推导的，这里预留。
    *
-   * @author hdf
+   * @author xiaozhennan
    */
   public enum ColumnDataType {
       // @formatter:off

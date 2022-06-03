@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public class AdminPasswordEncoder {
 

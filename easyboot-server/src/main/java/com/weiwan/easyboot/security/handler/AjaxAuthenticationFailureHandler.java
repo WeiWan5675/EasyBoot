@@ -21,10 +21,9 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import com.weiwan.easyboot.event.AdminEventBus;
 import com.weiwan.easyboot.common.Result;
 import com.weiwan.easyboot.utils.IpUtil;
-import com.weiwan.easyboot.config.AbstractJsonResponeHandler;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public class AjaxAuthenticationFailureHandler extends AbstractJsonResponeHandler
     implements AuthenticationFailureHandler {

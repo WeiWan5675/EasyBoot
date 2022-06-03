@@ -1,6 +1,6 @@
 package com.weiwan.easyboot.web;
 
-import com.weiwan.easyboot.component.SpringContextHolder;
+import com.weiwan.easyboot.utils.SpringContextHolder;
 import com.weiwan.easyboot.config.BootProperties;
 import com.weiwan.easyboot.web.filters.RequestFilter;
 import com.weiwan.easyboot.web.interceptor.DataAuthorityClearInterceptor;
@@ -16,11 +16,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @Configuration
 @RequiredArgsConstructor
-public class WebConfigurer implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
     private final BootProperties bootProperties;
 

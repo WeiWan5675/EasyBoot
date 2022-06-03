@@ -3,7 +3,7 @@ package com.weiwan.easyboot.model.entity;
 /**
  * 查询基类
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public abstract class AbstractQuery {
 

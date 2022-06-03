@@ -5,7 +5,7 @@ package com.weiwan.easyboot.common;
  *
  * 不采用枚举的原因是因为，子业务模块都需要自己的定义响应码及响应消息，但枚举无法继承
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class DefaultCodeMsgBundle {
 

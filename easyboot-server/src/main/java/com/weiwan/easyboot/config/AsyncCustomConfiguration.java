@@ -1,11 +1,10 @@
-package com.weiwan.easyboot.component;
+package com.weiwan.easyboot.config;
 
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import com.weiwan.easyboot.config.BootProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;

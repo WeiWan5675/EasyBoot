@@ -11,7 +11,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 public class SortFieldMapping {
 

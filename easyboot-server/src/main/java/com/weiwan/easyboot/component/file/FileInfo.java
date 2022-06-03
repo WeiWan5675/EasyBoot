@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 文件信息
  *
- * @author hdf 2018年4月15日
+ * @author xiaozhennan 2018年4月15日
  */
 @ApiModel
 @AllArgsConstructor

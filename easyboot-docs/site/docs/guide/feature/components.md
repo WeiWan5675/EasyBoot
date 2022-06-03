@@ -108,7 +108,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * RedisTemplate 等自定义，主要修改序列化方式
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Configuration(proxyBeanMethods = false)
 public class RedisCustomConfiguration {
@@ -172,7 +172,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 优化原生无连接池问题
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Configuration
 @RequiredArgsConstructor

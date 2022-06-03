@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
  * 这里不能用application.properties相关名称.配置中字段可以被外部配置或者引用该组件方覆盖
  * </p>
  *
- * @author hdf
+ * @author xiaozhennan
  */
 @Configuration
 @AutoConfigureAfter({BootMyBatisPlusConfig.class})

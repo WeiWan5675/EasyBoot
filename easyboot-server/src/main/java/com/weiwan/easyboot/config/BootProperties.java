@@ -2,6 +2,9 @@ package com.weiwan.easyboot.config;
 
 import com.weiwan.easyboot.common.DatabaseType;
 import com.weiwan.easyboot.component.file.StoreType;
+import com.weiwan.easyboot.model.enums.LockStorageType;
+import com.weiwan.easyboot.security.lock.LockStateStorage;
+import com.zaxxer.hikari.HikariConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
@@ -10,7 +13,7 @@ import java.time.Duration;
 import java.util.Properties;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @Data
 @ConfigurationProperties(prefix = "easyboot")
@@ -198,6 +201,7 @@ public class BootProperties {
         private Integer lockPasswdFailTimes = 5;
         private Integer lockIpFailTimes = 20;
         private Duration lockTime = Duration.ofDays(1);
+        private LockStorageType lockStorage = LockStorageType.REDIS;
         private boolean recordLog = true;
 
         /**
@@ -225,11 +229,10 @@ public class BootProperties {
     public class DatabaseProperties {
         private DatabaseType type;
         private String url;
-        private Integer port;
         private String username;
         private String password;
         private String schema;
-        private Properties hikari = new Properties();
+        private HikariConfig hikari = new HikariConfig();
     }
 
     @Data

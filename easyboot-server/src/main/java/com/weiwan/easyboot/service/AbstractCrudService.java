@@ -21,7 +21,7 @@ import com.weiwan.easyboot.utils.IdGen;
 /**
  * 增删改查service
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public abstract class AbstractCrudService<D extends CrudMapper<T, PK>, T extends BaseEntity<PK>, PK>
     extends AbstractTransactionService {
@@ -44,13 +44,13 @@ public abstract class AbstractCrudService<D extends CrudMapper<T, PK>, T extends
     /**
      * 更具条件返回一个
      *
-     * @param condition
+     * @param query
      *            可以为null
      * @return
      */
     @Transactional(readOnly = true)
-    public T findOne(AbstractQuery condition) {
-        List<T> ts = this.find(condition);
+    public T findOne(AbstractQuery query) {
+        List<T> ts = this.find(query);
         Assert.isTrue(ts.size() <= 1,
             "Expected one result (or null) to be returned by findOne(), but found: " + ts.size());
         return ts.isEmpty() ? null : ts.get(0);
@@ -59,23 +59,23 @@ public abstract class AbstractCrudService<D extends CrudMapper<T, PK>, T extends
     /**
      * 自定义条件查询
      *
-     * @param condition
+     * @param query
      * @return
      */
     @Transactional(readOnly = true)
-    public List<T> find(Page<T> page, AbstractQuery condition) {
-        return this.d.selectByQuery(page, condition);
+    public List<T> find(Page<T> page, AbstractQuery query) {
+        return this.d.selectByQuery(page, query);
     }
 
     /**
      * 自定义条件查询
      *
-     * @param condition
+     * @param query
      * @return
      */
     @Transactional(readOnly = true)
-    public List<T> find(AbstractQuery condition) {
-        return this.d.selectByQuery(condition);
+    public List<T> find(AbstractQuery query) {
+        return this.d.selectByQuery(query);
     }
 
     /**

@@ -23,7 +23,7 @@ import com.weiwan.easyboot.model.enums.EntityStatus;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @author hdf
+ * @author xiaozhennan
  */
 @RequiredArgsConstructor
 @Service

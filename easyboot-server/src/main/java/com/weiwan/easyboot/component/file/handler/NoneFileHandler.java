@@ -6,7 +6,7 @@ import java.io.InputStream;
 /**
  * 文件上传空实现，让{@code @Autowire} 默认注入文件处理类不报错
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class NoneFileHandler implements FileHandler {
 

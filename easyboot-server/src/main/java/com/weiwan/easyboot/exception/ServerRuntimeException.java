@@ -3,7 +3,7 @@ package com.weiwan.easyboot.exception;
 /**
  * 运行时候异常
  *
- * @author hdf
+ * @author xiaozhennan
  */
 public class ServerRuntimeException extends RuntimeException {
 
