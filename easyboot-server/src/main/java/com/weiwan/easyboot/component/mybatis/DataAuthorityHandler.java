@@ -1,7 +1,8 @@
-package com.weiwan.easyboot.config;
+package com.weiwan.easyboot.component.mybatis;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.DataPermissionHandler;
 import com.weiwan.easyboot.annotation.DataAuthority;
+import com.weiwan.easyboot.config.BootProperties;
 import com.weiwan.easyboot.security.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.JSQLParserException;
@@ -22,13 +23,13 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 @Slf4j
-public class BootDataAuthorityHandler implements DataPermissionHandler {
+public class DataAuthorityHandler implements DataPermissionHandler {
 
     private BootProperties.DataAuthorityProperties dataAuthorityProperties;
     private BootProperties.DataAuthorityMode dataAuthorityMode;
     private final ThreadLocal<DataAuthority> threadLocal = new ThreadLocal<>();
 
-    public BootDataAuthorityHandler(@Autowired BootProperties bootProperties) {
+    public DataAuthorityHandler(@Autowired BootProperties bootProperties) {
         this.dataAuthorityProperties = bootProperties.getDataAuthority();
         this.dataAuthorityMode = dataAuthorityProperties.getMode();
     }

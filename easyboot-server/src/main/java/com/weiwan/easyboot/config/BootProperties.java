@@ -1,16 +1,14 @@
 package com.weiwan.easyboot.config;
 
-import com.weiwan.easyboot.common.DatabaseType;
+import com.weiwan.easyboot.model.enums.DatabaseType;
 import com.weiwan.easyboot.component.file.StoreType;
 import com.weiwan.easyboot.model.enums.LockStorageType;
-import com.weiwan.easyboot.security.lock.LockStateStorage;
 import com.zaxxer.hikari.HikariConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.time.Duration;
-import java.util.Properties;
 
 /**
  * @author xiaozhennan

@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.Result;
 import com.weiwan.easyboot.component.file.FileInfo;
 
 import io.swagger.annotations.Api;

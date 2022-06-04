@@ -19,9 +19,9 @@ import lombok.RequiredArgsConstructor;
  */
 @Configuration
 @RequiredArgsConstructor
-public class ScheduledCustomConfiguration implements SchedulingConfigurer {
+public class BootScheduledConfiguration implements SchedulingConfigurer {
 
-    private static Logger logger = LoggerFactory.getLogger(ScheduledCustomConfiguration.class);
+    private static Logger logger = LoggerFactory.getLogger(BootScheduledConfiguration.class);
 
     private final BootProperties bootProperties;
 

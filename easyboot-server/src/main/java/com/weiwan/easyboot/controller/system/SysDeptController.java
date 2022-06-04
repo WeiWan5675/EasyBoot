@@ -15,8 +15,8 @@ import com.weiwan.easyboot.service.SysDeptService;
 import com.weiwan.easyboot.model.dto.Tree;
 import com.weiwan.easyboot.model.entity.SysDept;
 import com.weiwan.easyboot.model.entity.SysDeptQuery;
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.Result;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

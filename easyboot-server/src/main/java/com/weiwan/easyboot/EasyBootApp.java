@@ -26,8 +26,8 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @EnableAsync
 @EnableOpenApi
 @EnableConfigurationProperties({BootProperties.class})
-@ServletComponentScan(basePackages = {"com.weiwan.easyboot.web.*"})
-@MapperScan({"com.weiwan.easyboot.mapper"})
+@ServletComponentScan(basePackages = {"com.weiwan.easyboot.web.*"}) // 开启servlet组件注解扫描
+@MapperScan({"com.weiwan.easyboot.mapper"})  // 开启mapper组件注解扫描
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @Import({WebConfig.class, BeanValidatorPluginsConfiguration.class})
 public class EasyBootApp {

@@ -2,8 +2,8 @@ package com.weiwan.easyboot.advice;
 
 import javax.validation.ConstraintViolationException;
 
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.Result;
 import com.weiwan.easyboot.exception.BusinessException;
 import com.weiwan.easyboot.exception.ServerRuntimeException;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.common;
+package com.weiwan.easyboot.model;
 
 /**
  * 错误码及响应信息结构

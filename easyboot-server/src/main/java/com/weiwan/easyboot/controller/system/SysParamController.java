@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import com.weiwan.easyboot.service.SysParamService;
 import com.weiwan.easyboot.model.entity.SysParam;
 import com.weiwan.easyboot.model.entity.SysParamQuery;
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.Result;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

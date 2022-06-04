@@ -1,7 +1,7 @@
 package com.weiwan.easyboot.exception;
 
-import com.weiwan.easyboot.common.CodeMsg;
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.CodeMsg;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
 
 /**
  * 业务自定义异常

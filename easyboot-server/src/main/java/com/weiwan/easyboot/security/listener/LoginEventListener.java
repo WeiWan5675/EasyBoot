@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.eventbus.Subscribe;
 import com.weiwan.easyboot.config.BootProperties;
-import com.weiwan.easyboot.event.AdminEventBus;
+import com.weiwan.easyboot.event.BootEventBus;
 import com.weiwan.easyboot.security.LoginSecurityService;
 import com.weiwan.easyboot.security.SecurityUtils;
 import com.weiwan.easyboot.model.constant.LoginResult;
@@ -73,7 +73,7 @@ public class LoginEventListener implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        AdminEventBus.register(this);
+        BootEventBus.register(this);
     }
 
     @RequiredArgsConstructor

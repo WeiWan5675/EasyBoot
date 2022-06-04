@@ -1,7 +1,7 @@
 package com.weiwan.easyboot.exception;
 
-import com.weiwan.easyboot.common.CodeMsg;
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.CodeMsg;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
 
 /**
  * admin 端需要标准的错误码，非强制，在开发效率与可维护性之间找平衡，统一有利于国际化及后续监控支持

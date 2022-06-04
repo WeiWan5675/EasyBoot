@@ -1,6 +1,6 @@
 package com.weiwan.easyboot.web;
 
-import com.weiwan.easyboot.utils.SpringContextHolder;
+import com.weiwan.easyboot.component.SpringContextHolder;
 import com.weiwan.easyboot.config.BootProperties;
 import com.weiwan.easyboot.web.filters.RequestFilter;
 import com.weiwan.easyboot.web.interceptor.DataAuthorityClearInterceptor;

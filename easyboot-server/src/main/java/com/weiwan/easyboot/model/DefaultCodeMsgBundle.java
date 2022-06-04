@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.common;
+package com.weiwan.easyboot.model;
 
 /**
  * 通用响应码及响应消息，子业务模块如果需要规范错误码可以继承该类

@@ -1,6 +1,7 @@
-package com.weiwan.easyboot.config;
+package com.weiwan.easyboot.component.mybatis;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.weiwan.easyboot.config.BootProperties;
 import com.weiwan.easyboot.model.dto.UserInfo;
 import com.weiwan.easyboot.security.SecurityUtils;
 import net.sf.jsqlparser.expression.Expression;
@@ -14,12 +15,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class BootMultiTenantLineHandler implements TenantLineHandler {
+public class MultiTenantLineHandler implements TenantLineHandler {
 
     private BootProperties.MultiTenantProperties multiTenantProperties;
 
 
-    public BootMultiTenantLineHandler(@Autowired BootProperties bootProperties) {
+    public MultiTenantLineHandler(@Autowired BootProperties bootProperties) {
         this.multiTenantProperties = bootProperties.getMultiTenant();
     }
 

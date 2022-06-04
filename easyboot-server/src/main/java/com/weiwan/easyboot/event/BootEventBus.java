@@ -5,12 +5,12 @@ import com.google.common.eventbus.EventBus;
 /**
  * @author xiaozhennan
  */
-public class AdminEventBus {
+public class BootEventBus {
 
-    private static final String EVENT_BUS_NAME = "admin";
+    private static final String EVENT_BUS_NAME = "Boot";
     private static final EventBus INSTANCE = new EventBus(EVENT_BUS_NAME);
 
-    private AdminEventBus() {}
+    private BootEventBus() {}
 
     public static void publish(Object object) {
         INSTANCE.post(object);

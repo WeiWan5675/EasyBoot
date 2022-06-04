@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.common;
+package com.weiwan.easyboot.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

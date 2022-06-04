@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.Result;
 
 /**
  * 返回json 格式respone

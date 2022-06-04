@@ -18,8 +18,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import com.weiwan.easyboot.event.AdminEventBus;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.event.BootEventBus;
+import com.weiwan.easyboot.model.Result;
 import com.weiwan.easyboot.utils.IpUtil;
 
 /**
@@ -60,7 +60,7 @@ public class AjaxAuthenticationFailureHandler extends AbstractJsonResponeHandler
             loginResultMsg.setResult(LoginResult.UNKOWN);
         }
         loginResultMsg.setUserId(SecurityUtils.ANONYMOUS_USER_ID);
-        AdminEventBus.publish(loginResultMsg);
+        BootEventBus.publish(loginResultMsg);
         super.sendRespone(response, result);
     }
 

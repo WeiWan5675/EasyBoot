@@ -11,9 +11,9 @@ import com.weiwan.easyboot.security.listener.LoginEventListener;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.weiwan.easyboot.event.AdminEventBus;
+import com.weiwan.easyboot.event.BootEventBus;
 import com.weiwan.easyboot.security.SecurityUtils;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.Result;
 import com.weiwan.easyboot.utils.IpUtil;
 
 /**
@@ -32,7 +32,7 @@ public class AjaxAuthenticationSuccessHandler extends AbstractJsonResponeHandler
             IpUtil.getRemoteIp(request), request.getHeader("User-Agent"));
         loginResultMsg.setResult(LoginResult.SUCCESS);
         loginResultMsg.setUserId(SecurityUtils.getUserId());
-        AdminEventBus.publish(loginResultMsg);
+        BootEventBus.publish(loginResultMsg);
         super.sendRespone(response, Result.SUCCESS);
     }
 

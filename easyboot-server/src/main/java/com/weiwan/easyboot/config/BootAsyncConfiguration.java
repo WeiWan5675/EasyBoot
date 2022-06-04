@@ -24,9 +24,9 @@ import lombok.RequiredArgsConstructor;
  */
 @Configuration
 @RequiredArgsConstructor
-public class AsyncCustomConfiguration extends AsyncConfigurerSupport {
+public class BootAsyncConfiguration extends AsyncConfigurerSupport {
 
-    private static Logger logger = LoggerFactory.getLogger(AsyncCustomConfiguration.class);
+    private static Logger logger = LoggerFactory.getLogger(BootAsyncConfiguration.class);
 
     private final BootProperties bootProperties;
 

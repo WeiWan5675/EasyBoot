@@ -1,10 +1,6 @@
 package com.weiwan.easyboot.security.lock;
 
-import com.weiwan.easyboot.component.cache.LocalCacheService;
-import com.weiwan.easyboot.component.cache.LocalCacheServiceImpl;
 import com.weiwan.easyboot.component.cache.LocalCacheStorage;
-import com.weiwan.easyboot.component.cache.TimedLocalCacheStorage;
-import com.weiwan.easyboot.utils.SpringContextHolder;
 
 import java.time.Duration;
 

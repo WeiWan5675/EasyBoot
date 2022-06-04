@@ -15,10 +15,10 @@ import javax.annotation.Resource;
  * @author xiaozhennan
  */
 @Configuration()
-public class RedisCustomConfiguration {
+public class BootRedisConfiguration {
 
     @Resource
-    RedisConnectionFactory redisConnectionFactory;
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Bean
     public RedisTemplate<String, ?> redisTemplate() {

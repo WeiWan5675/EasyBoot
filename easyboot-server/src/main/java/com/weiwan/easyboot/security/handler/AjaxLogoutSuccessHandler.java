@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.Result;
 
 /**
  * @author xiaozhennan

@@ -14,8 +14,8 @@ import com.weiwan.easyboot.model.dto.RoleAssignAo;
 import com.weiwan.easyboot.service.SysRoleService;
 import com.weiwan.easyboot.model.entity.SysRole;
 import com.weiwan.easyboot.model.entity.SysRoleQuery;
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.Result;
 import com.weiwan.easyboot.controller.BaseController;
 
 import io.swagger.annotations.Api;

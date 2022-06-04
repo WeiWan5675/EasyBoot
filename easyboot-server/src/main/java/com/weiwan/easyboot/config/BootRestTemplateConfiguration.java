@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 
-import com.weiwan.easyboot.config.BootProperties;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -34,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Configuration
 @RequiredArgsConstructor
-public class RestTemplateCustomConfiguration {
+public class BootRestTemplateConfiguration {
 
     private final BootProperties bootProperties;
 

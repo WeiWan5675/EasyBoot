@@ -9,7 +9,7 @@ easyboot:
     store-type: local
 
   login:
-    lockStorage: redis
+    lockStorage: local
     lock-time: 30000
 
   database:

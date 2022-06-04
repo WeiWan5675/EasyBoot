@@ -18,8 +18,8 @@ import com.weiwan.easyboot.model.enums.LockType;
 import com.weiwan.easyboot.service.SysUserService;
 import com.weiwan.easyboot.model.entity.SysUser;
 import com.weiwan.easyboot.model.entity.SysUserQuery;
-import com.weiwan.easyboot.common.DefaultCodeMsgBundle;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.DefaultCodeMsgBundle;
+import com.weiwan.easyboot.model.Result;
 import com.weiwan.easyboot.controller.BaseController;
 
 import io.swagger.annotations.Api;

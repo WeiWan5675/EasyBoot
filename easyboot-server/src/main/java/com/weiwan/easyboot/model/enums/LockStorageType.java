@@ -8,5 +8,5 @@ package com.weiwan.easyboot.model.enums;
  * @Description:
  **/
 public enum LockStorageType {
-    REDIS, CACHE, JDBC
+    REDIS, LOCAL
 }

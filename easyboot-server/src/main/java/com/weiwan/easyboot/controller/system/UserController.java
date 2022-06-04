@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.weiwan.easyboot.model.entity.SysMenu;
-import com.weiwan.easyboot.common.Result;
+import com.weiwan.easyboot.model.Result;
 import com.weiwan.easyboot.utils.TreeHelper;
 import com.weiwan.easyboot.controller.BaseController;
 import com.weiwan.easyboot.model.dto.UserAo;

@@ -1,24 +1,16 @@
 package com.weiwan.easyboot.security;
 
-import javax.annotation.Resource;
-
 import com.weiwan.easyboot.component.cache.LocalCacheService;
-import com.weiwan.easyboot.component.cache.LocalCacheServiceImpl;
 import com.weiwan.easyboot.config.BootProperties;
 import com.weiwan.easyboot.model.enums.LockStorageType;
 import com.weiwan.easyboot.security.lock.*;
 import com.weiwan.easyboot.service.AbstractBaseService;
-import com.weiwan.easyboot.utils.SpringContextHolder;
+import com.weiwan.easyboot.component.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
-
-import com.weiwan.easyboot.config.BootProperties;
-
-import lombok.RequiredArgsConstructor;
 
 /**
  * @author xiaozhennan
@@ -42,7 +34,7 @@ public class LoginSecurityService extends AbstractBaseService implements Initial
         this.loginProperties = bootProperties.getLogin();
         LockStorageType lockStorage = loginProperties.getLockStorage();
         if (lockStorage == LockStorageType.REDIS) {
-            RedisTemplate<String, Object> redisTemplate = SpringContextHolder.getBean(RedisTemplate.class);
+            RedisTemplate<String, Object> redisTemplate = SpringContextHolder.getBean("redisTemplate", RedisTemplate.class);
             lockStateStorage = new RedisLockStateStorage(redisTemplate);
         } else {
             lockStateStorage = new CacheLockStateStorage(localCacheService.getCacheManager().getCacheStorage());

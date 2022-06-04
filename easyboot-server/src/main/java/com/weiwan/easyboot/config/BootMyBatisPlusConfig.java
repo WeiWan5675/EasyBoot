@@ -13,15 +13,15 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionIntercepto
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.weiwan.easyboot.common.DatabaseType;
+import com.weiwan.easyboot.component.mybatis.DataAuthorityHandler;
+import com.weiwan.easyboot.component.mybatis.MultiTenantLineHandler;
+import com.weiwan.easyboot.model.enums.DatabaseType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -55,10 +55,10 @@ public class BootMyBatisPlusConfig {
     private BootProperties bootProperties;
 
     @Autowired
-    private BootDataAuthorityHandler dataAuthorityHandler;
+    private DataAuthorityHandler dataAuthorityHandler;
 
     @Autowired
-    private BootMultiTenantLineHandler multiTenantLineHandler;
+    private MultiTenantLineHandler multiTenantLineHandler;
 
     @Bean(name = "mybatisConfiguration")
     @ConfigurationProperties(prefix = "mybatis-plus.configuration")

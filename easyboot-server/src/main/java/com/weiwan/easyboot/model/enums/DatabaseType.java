@@ -1,4 +1,4 @@
-package com.weiwan.easyboot.common;
+package com.weiwan.easyboot.model.enums;
 
 import lombok.Data;
 
