@@ -9,8 +9,18 @@ easyboot:
     store-type: local
 
   login:
-    lockStorage: local
-    lock-time: 30000
+    record-log: true
+    login-secret: EasyBoot:Secret:JWT:WDdMN7WDPJYDgtMG1f
+    login-expired: 3600000
+    login-lock:
+      enable-ip-lock: true
+      enable-user-lock: true
+      lock-ip-fail-times: 20
+      lock-user-fail-times: 5
+      lock-time: P1D # 这里是Duration写法
+      lock-storage: local #默认是保存到本地内存, 如果需要保存到redis, 需要设置redis得连接信息
+    remember-key: C02tlRRi8JNsT6Bsp2liSE1paa5naDNY
+    remember-time: P7D
 
   database:
     hikari:

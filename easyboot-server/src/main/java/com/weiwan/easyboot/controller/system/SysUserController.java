@@ -8,11 +8,11 @@ import javax.validation.constraints.NotNull;
 
 import com.weiwan.easyboot.component.file.FileService;
 import com.weiwan.easyboot.model.PageWrapper;
+import com.weiwan.easyboot.security.PasswordUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.weiwan.easyboot.security.AdminPasswordEncoder;
-import com.weiwan.easyboot.security.LoginSecurityService;
+import com.weiwan.easyboot.security.lock.LoginLockService;
 import com.weiwan.easyboot.security.SecurityUtils;
 import com.weiwan.easyboot.model.enums.LockType;
 import com.weiwan.easyboot.service.SysUserService;
@@ -40,7 +40,7 @@ public class SysUserController extends BaseController {
 
     private final SysUserService sysUserService;
     private final FileService fileService;
-    private final LoginSecurityService loginSecurityService;
+    private final LoginLockService loginLockService;
 
     @ApiOperation(value = "主键查询")
     @PreAuthorize("hasAuthority('sys:user:query')")
@@ -67,7 +67,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("hasAuthority('sys:user:save')")
     @PostMapping(value = "/save")
     public Result save(@Valid @RequestBody SysUser sysUser) {
-        sysUser.setPassword(AdminPasswordEncoder.encode(sysUser.getPassword()));
+        sysUser.setPassword(PasswordUtil.encode(sysUser.getPassword()));
         int count = sysUserService.save(sysUser);
         return count == 1 ? Result.SUCCESS : Result.error(DefaultCodeMsgBundle.SAVE_ERROR, count);
     }
@@ -79,7 +79,7 @@ public class SysUserController extends BaseController {
         if (SecurityUtils.isSuperAdmin(sysUser.getId()) && !SecurityUtils.isSuperAdmin()) {
             return Result.error("只有系统管理员才能修改");
         }
-        sysUser.setPassword(AdminPasswordEncoder.encode(sysUser.getPassword()));
+        sysUser.setPassword(PasswordUtil.encode(sysUser.getPassword()));
         int count = sysUserService.updateSelective(sysUser);
         return count == 1 ? Result.SUCCESS : Result.error(DefaultCodeMsgBundle.UPDATE_ERROR, count);
     }
@@ -119,9 +119,9 @@ public class SysUserController extends BaseController {
     public Result unlock(@ApiParam("0:ip,1:用户名") @RequestParam @NotNull Integer type,
         @NotBlank @RequestParam String lockKey) {
         if (Objects.equals(type, LockType.IP.ordinal())) {
-            loginSecurityService.clear(null, lockKey);
+            loginLockService.clear(null, lockKey);
         } else if (Objects.equals(type, LockType.USERNAME.ordinal())) {
-            loginSecurityService.clear(lockKey, null);
+            loginLockService.clear(lockKey, null);
         }
         return Result.ok();
     }

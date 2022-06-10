@@ -84,12 +84,12 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, ...loginParams } = params;
         // 同步登陆
-        await loginApi(loginParams);
-        //const data = await loginApi(loginParams);
-        //const { token, userId } = data;
+        // await loginApi(loginParams);
+        this.setToken(undefined);
+        const { token } = await loginApi(loginParams);
+        console.log(token);
         // save token
-        this.setToken(new Date().getTime() + '');
-
+        this.setToken(JSON.stringify(token));
         const userInfo = await this.getUserInfoAction();
         goHome && (await router.replace(PageEnum.BASE_HOME));
         return userInfo;
@@ -125,6 +125,7 @@ export const useUserStore = defineStore({
         title: t('sys.app.logoutTip'),
         content: t('sys.app.logoutMessage'),
         onOk: async () => {
+          this.setToken('');
           await this.logout(true);
         },
       });

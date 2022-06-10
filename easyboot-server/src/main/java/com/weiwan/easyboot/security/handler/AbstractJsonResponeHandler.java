@@ -20,9 +20,9 @@ import com.weiwan.easyboot.model.Result;
 public abstract class AbstractJsonResponeHandler {
 
     @Autowired
-    protected ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
-    protected void sendRespone(HttpServletResponse response, Result result) throws IOException {
+    protected void response(HttpServletResponse response, Result result) throws IOException {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         String content = objectMapper.writeValueAsString(result);

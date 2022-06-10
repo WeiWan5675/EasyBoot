@@ -1,13 +1,12 @@
 package com.weiwan.easyboot.security;
 
-import java.util.Objects;
-import java.util.Optional;
-
+import com.weiwan.easyboot.model.dto.UserInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 
-import com.weiwan.easyboot.model.dto.UserInfo;
+import java.util.Objects;
+import java.util.Optional;
 
 public class SecurityUtils {
 
@@ -26,9 +25,9 @@ public class SecurityUtils {
         if (null != authentication && authentication.isAuthenticated()) {
             // 如果是匿名，返回的是个字符串
             Object principal = authentication.getPrincipal();
-            if (principal instanceof AdminUserDetails) {
-                AdminUserDetails adminUserDetails = (AdminUserDetails)principal;
-                return adminUserDetails.getUserInfo();
+            if (principal instanceof LoginUserDetails) {
+                LoginUserDetails userDetails = (LoginUserDetails)principal;
+                return userDetails.getUserInfo();
             }
         }
         return null;
@@ -50,5 +49,10 @@ public class SecurityUtils {
     public static String getDsf() {
         Optional<UserInfo> user = Optional.ofNullable(getUser());
         return user.isPresent() ? user.get().getDsf() : null;
+    }
+
+    public static Integer getUserContextId(){
+        UserInfo user = SecurityUtils.getUser();
+        return null != user ? user.getUserId() : SecurityUtils.ANONYMOUS_USER_ID;
     }
 }

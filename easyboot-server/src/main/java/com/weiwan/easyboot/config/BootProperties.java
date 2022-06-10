@@ -1,7 +1,7 @@
 package com.weiwan.easyboot.config;
 
-import com.weiwan.easyboot.model.enums.DatabaseType;
 import com.weiwan.easyboot.component.file.StoreType;
+import com.weiwan.easyboot.model.enums.DatabaseType;
 import com.weiwan.easyboot.model.enums.LockStorageType;
 import com.zaxxer.hikari.HikariConfig;
 import lombok.Data;
@@ -196,30 +196,27 @@ public class BootProperties {
     @Data
     public class LoginProperties {
 
-        private Integer lockPasswdFailTimes = 5;
-        private Integer lockIpFailTimes = 20;
-        private Duration lockTime = Duration.ofDays(1);
-        private LockStorageType lockStorage = LockStorageType.REDIS;
         private boolean recordLog = true;
-
-        /**
-         * 开启session 并发控制，true 下面才maximumSessions & maxSessionsPreventsLogin才生效
-         */
-        private boolean concurrentSessionControlEnabled = true;
-        /**
-         * Controls the maximum number of sessions for a user where sessionConcurrency =true
-         */
-        private int maximumSessions = 1;
-        /**
-         * 后面一个登陆{@code true} 登陆报错，false 后面踢前面,when sessionConcurrency=true
-         */
-        private boolean maxSessionsPreventsLogin = false;
-
+        private String loginSecret = "EasyBoot:Secret:JWT:WDdMN7WDPJYDgtMG1f";
+        private long loginExpired = 1000 * 60 * 60L;
+        private String rememberKey = "C02tlRRi8JNsT6Bsp2liSE1paa5naDNY";
         private Duration rememberTime = Duration.ofDays(7);
+        LoginLockProperties loginLock = new LoginLockProperties();
+
+
         /**
          * 可以定期更换
          */
-        private String rememberKey = "C02tlRRi8JNsT6Bsp2liSE1paa5naDNY";
+
+        @Data
+        public class LoginLockProperties {
+            private boolean enableUserLock = true;
+            private boolean enableIpLock = true;
+            private Integer lockUserFailTimes = 5;
+            private Integer lockIpFailTimes = 20;
+            private Duration lockTime = Duration.ofDays(1);
+            private LockStorageType lockStorage = LockStorageType.LOCAL;
+        }
 
     }
 

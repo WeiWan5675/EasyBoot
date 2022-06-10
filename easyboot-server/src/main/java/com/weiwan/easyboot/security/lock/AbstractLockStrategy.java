@@ -10,14 +10,17 @@ import org.springframework.util.Assert;
  */
 public abstract class AbstractLockStrategy implements LockStrategy {
 
-    private final Duration lockTime;
-    private final int lockFailTimes;
-    private final LockStateStorage lockStateStorage;
+    private Duration lockTime;
+    private int lockFailTimes;
+    private LockStateStorage lockStateStorage;
 
     public AbstractLockStrategy(Duration lockTime, int lockFailTimes, LockStateStorage lockStateStorage) {
         this.lockTime = lockTime;
         this.lockFailTimes = lockFailTimes;
         this.lockStateStorage = lockStateStorage;
+    }
+
+    protected AbstractLockStrategy() {
     }
 
     @Override

@@ -32,6 +32,9 @@ public class UserGrantedAuthority implements GrantedAuthority {
         this.authorityName = isRole ? DEFAULT_ROLE_PREFIX + authorityName : authorityName;
     }
 
+    public UserGrantedAuthority() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -54,4 +57,11 @@ public class UserGrantedAuthority implements GrantedAuthority {
         return authorityName;
     }
 
+    public String getAuthorityName() {
+        return authorityName;
+    }
+
+    public void setAuthorityName(String authorityName) {
+        this.authorityName = authorityName;
+    }
 }

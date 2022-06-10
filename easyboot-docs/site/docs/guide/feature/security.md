@@ -307,9 +307,9 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
         userInfo.setDeptName(user.getDeptName());
         userInfo.setPhoto(fileService.getUrl(user.getPhoto()));
         // 角色及权限信息登录成功后放入
-        AdminUserDetails adminUserDetails = new AdminUserDetails(userInfo, username, user.getPassword());
-        adminUserDetails.setAuthorities(getAuthorities(user.getId()));
-        return adminUserDetails;
+        AdminUserDetails userDetails = new AdminUserDetails(userInfo, username, user.getPassword());
+        userDetails.setAuthorities(getAuthorities(user.getId()));
+        return userDetails;
     }
 
     /**

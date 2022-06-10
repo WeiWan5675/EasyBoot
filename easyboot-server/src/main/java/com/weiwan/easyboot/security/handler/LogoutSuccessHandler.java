@@ -7,18 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import com.weiwan.easyboot.model.Result;
 
 /**
  * @author xiaozhennan
  */
-public class AjaxLogoutSuccessHandler extends AbstractJsonResponeHandler implements LogoutSuccessHandler {
+public class LogoutSuccessHandler extends AbstractJsonResponeHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
         throws IOException, ServletException {
-        super.sendRespone(response, Result.SUCCESS);
+        super.response(response, Result.SUCCESS);
     }
 }

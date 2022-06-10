@@ -8,7 +8,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -65,18 +64,6 @@ public class WebConfig implements WebMvcConfigurer {
                     .allowedHeaders(cors.getAllowedHeaders()).allowedMethods(cors.getAllowedMethods())
                     .allowCredentials(cors.isAllowCredentials()).maxAge(cors.getMaxAge());
         }
-    }
-
-    /**
-     * 默认Spring session SameSite 默认为Lax ,无法跨域使用
-     *
-     * @return
-     */
-    @Bean
-    public DefaultCookieSerializer defaultCookieSerializer() {
-        DefaultCookieSerializer defaultCookieSerializer = new DefaultCookieSerializer();
-        defaultCookieSerializer.setSameSite(null);
-        return defaultCookieSerializer;
     }
 
     @Override

@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class UserService extends AbstractTransactionService {
+public class LoginUserService extends AbstractTransactionService {
 
     private final SysRoleService sysRoleService;
     private final SysMenuService sysMenuService;
@@ -92,9 +92,9 @@ public class UserService extends AbstractTransactionService {
     public boolean updatePassword(@NotNull Integer userId, @NotEmpty String oldPassword, @NotEmpty String newPassword) {
         SysUser sysUser = this.sysUserService.find(userId);
         Assert.notNull(sysUser, "user must not null");
-        boolean matches = AdminPasswordEncoder.matches(oldPassword, sysUser.getPassword());
+        boolean matches = PasswordUtil.matches(oldPassword, sysUser.getPassword());
         if (matches) {
-            sysUser.setPassword(AdminPasswordEncoder.encode(newPassword));
+            sysUser.setPassword(PasswordUtil.encode(newPassword));
             this.sysUserService.update(sysUser);
             return true;
         }

@@ -17,7 +17,7 @@ import com.weiwan.easyboot.model.dto.UserResourcesVo;
 import com.weiwan.easyboot.model.dto.vue.RouteMeta;
 import com.weiwan.easyboot.model.dto.vue.VueRouteMenu;
 import com.weiwan.easyboot.security.SecurityUtils;
-import com.weiwan.easyboot.security.UserService;
+import com.weiwan.easyboot.security.LoginUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.CaseUtils;
 import org.springframework.web.bind.annotation.*;
@@ -34,19 +34,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController extends BaseController {
 
-    private final UserService userService;
+    private final LoginUserService loginUserService;
 
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/info")
     public Result<UserInfo> getUserInfo() {
-        UserInfo user = userService.userInfo(SecurityUtils.getUserId());
+        UserInfo user = loginUserService.userInfo(SecurityUtils.getUserId());
         return Result.ok(user);
     }
 
     @ApiOperation(value = "获取用户信息")
     @PostMapping("/save_user_info")
     public Result saveUserInfo(@Valid @RequestBody UserAo userAo) {
-        userService.saveUserInfo(SecurityUtils.getUserId(), userAo);
+        loginUserService.saveUserInfo(SecurityUtils.getUserId(), userAo);
         return Result.SUCCESS;
     }
 
@@ -54,7 +54,7 @@ public class UserController extends BaseController {
     @PostMapping("/update_password")
     public Result updatePassword(@RequestParam @NotEmpty @Size(min = 6, max = 50) String oldPassword,
         @RequestParam @NotEmpty @Size(min = 6, max = 50) String newPassword) {
-        boolean result = userService.updatePassword(SecurityUtils.getUserId(), oldPassword, newPassword);
+        boolean result = loginUserService.updatePassword(SecurityUtils.getUserId(), oldPassword, newPassword);
         if (!result) {
             return Result.error("原密码错误");
         }
@@ -67,9 +67,9 @@ public class UserController extends BaseController {
         UserInfo user = SecurityUtils.getUser();
         // 角色
         Set<String> roles =
-            userService.findRolesByUserId(user.getUserId()).stream().map(v -> v.getCode()).collect(Collectors.toSet());
+            loginUserService.findRolesByUserId(user.getUserId()).stream().map(v -> v.getCode()).collect(Collectors.toSet());
 
-        List<SysMenu> menus = userService.findMenusByUserId(user.getUserId());
+        List<SysMenu> menus = loginUserService.findMenusByUserId(user.getUserId());
         // 权限
         Set<String> permissions = menus.stream().filter(v -> StringUtils.isNotBlank(v.getPermission()))
             .map(v -> StringUtils.trim(v.getPermission())).collect(Collectors.toSet());

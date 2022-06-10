@@ -16,7 +16,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.weiwan.easyboot.event.BootEventBus;
 import com.weiwan.easyboot.model.Result;
@@ -25,8 +24,8 @@ import com.weiwan.easyboot.utils.IpUtil;
 /**
  * @author xiaozhennan
  */
-public class AjaxAuthenticationFailureHandler extends AbstractJsonResponeHandler
-    implements AuthenticationFailureHandler {
+public class LoginFailureHandler extends AbstractJsonResponeHandler
+    implements org.springframework.security.web.authentication.AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
@@ -61,7 +60,7 @@ public class AjaxAuthenticationFailureHandler extends AbstractJsonResponeHandler
         }
         loginResultMsg.setUserId(SecurityUtils.ANONYMOUS_USER_ID);
         BootEventBus.publish(loginResultMsg);
-        super.sendRespone(response, result);
+        super.response(response, result);
     }
 
     private String obtainUsername(HttpServletRequest request) {

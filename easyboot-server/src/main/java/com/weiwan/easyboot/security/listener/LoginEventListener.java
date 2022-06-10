@@ -1,20 +1,13 @@
 package com.weiwan.easyboot.security.listener;
 
-import java.util.Date;
-import java.util.Objects;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
-
 import com.google.common.eventbus.Subscribe;
 import com.weiwan.easyboot.config.BootProperties;
 import com.weiwan.easyboot.event.BootEventBus;
-import com.weiwan.easyboot.security.LoginSecurityService;
-import com.weiwan.easyboot.security.SecurityUtils;
 import com.weiwan.easyboot.model.constant.LoginResult;
-import com.weiwan.easyboot.service.SysLoginLogService;
 import com.weiwan.easyboot.model.entity.SysLoginLog;
-
+import com.weiwan.easyboot.security.SecurityUtils;
+import com.weiwan.easyboot.security.lock.LoginLockService;
+import com.weiwan.easyboot.service.SysLoginLogService;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -22,6 +15,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author xiaozhennan
@@ -33,7 +31,7 @@ public class LoginEventListener implements InitializingBean {
 
     private final SysLoginLogService sysLoginLogService;
 
-    private final LoginSecurityService loginSecurityService;
+    private final LoginLockService loginLockService;
     private final BootProperties bootProperties;
 
     @Subscribe
@@ -57,14 +55,14 @@ public class LoginEventListener implements InitializingBean {
             log.error("parse userAgent error", e);
         }
         if (LoginResult.SUCCESS == msg.getResult()) {
-            loginSecurityService.clear(msg.getUserName(), msg.getIp());
+            loginLockService.clear(msg.getUserName(), msg.getIp());
         } else if (LoginResult.PASSWD_ERROR == msg.getResult()) {
-            loginSecurityService.getIpLockStrategy().increment(msg.getIp());
+            loginLockService.getIpLockStrategy().increment(msg.getIp());
             if (!Objects.equals(msg.getUserId(), SecurityUtils.SUPER_ADMIN_USER_ID)) {
-                loginSecurityService.getUsernameLockStrategy().increment(msg.getUserName());
+                loginLockService.getUsernameLockStrategy().increment(msg.getUserName());
             }
         } else if (LoginResult.USERNAME_NOT_FOUND == msg.getResult()) {
-            loginSecurityService.getIpLockStrategy().increment(msg.getIp());
+            loginLockService.getIpLockStrategy().increment(msg.getIp());
         }
         if (bootProperties.getLogin().isRecordLog()) {
             sysLoginLogService.save(sysLoginLog);

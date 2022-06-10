@@ -2,7 +2,7 @@ package com.weiwan.easyboot.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.weiwan.easyboot.model.PageWrapper;
-import com.weiwan.easyboot.security.UserContext;
+import com.weiwan.easyboot.security.SecurityUtils;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -122,8 +122,8 @@ public abstract class AbstractCrudService<D extends CrudMapper<T, PK>, T extends
             if (null == t.getId() && t.getId() instanceof String) {
                 t.setId((PK)IdGen.uuid());
             }
-            t.setCreateBy(UserContext.getUserId());
-            t.setUpdateBy(UserContext.getUserId());
+            t.setCreateBy(SecurityUtils.getUserContextId());
+            t.setUpdateBy(SecurityUtils.getUserContextId());
             t.setCreateTime(new Date());
             t.setUpdateTime(t.getCreateTime());
         });
@@ -138,7 +138,7 @@ public abstract class AbstractCrudService<D extends CrudMapper<T, PK>, T extends
      */
     public int updateSelective(@NotNull T record) {
         record.setUpdateTime(new Date());
-        record.setUpdateBy(UserContext.getUserId());
+        record.setUpdateBy(SecurityUtils.getUserContextId());
         return this.d.updateByPrimaryKeySelective(record);
     }
 
@@ -154,7 +154,7 @@ public abstract class AbstractCrudService<D extends CrudMapper<T, PK>, T extends
      */
     public int update(@NotNull T record) {
         record.setUpdateTime(new Date());
-        record.setUpdateBy(UserContext.getUserId());
+        record.setUpdateBy(SecurityUtils.getUserContextId());
         return this.d.updateByPrimaryKey(record);
     }
 

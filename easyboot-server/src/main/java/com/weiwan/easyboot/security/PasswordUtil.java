@@ -2,17 +2,17 @@ package com.weiwan.easyboot.security;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 /**
  * @author xiaozhennan
  */
-public class AdminPasswordEncoder {
+public class PasswordUtil {
 
     /**
      * 适合低三方登录的无密码传入
      */
-    public static final String NONE_PASSWORD = AdminPasswordEncoder.encode("none");
+    public static final String NONE_PASSWORD = PasswordUtil.encode("none");
 
     public static String encode(String password) {
         if (StringUtils.isEmpty(password)) {
@@ -26,7 +26,7 @@ public class AdminPasswordEncoder {
         return getEncoder().matches(rawPassword, encodedPassword);
     }
 
-    public static PasswordEncoder getEncoder() {
+    public static org.springframework.security.crypto.password.PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
 

@@ -1,63 +1,59 @@
 package com.weiwan.easyboot.security;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.weiwan.easyboot.component.file.FileService;
-import com.weiwan.easyboot.model.enums.LockType;
-import com.weiwan.easyboot.model.enums.LoginType;
+import com.weiwan.easyboot.model.dto.UserInfo;
+import com.weiwan.easyboot.model.entity.SysMenu;
+import com.weiwan.easyboot.model.entity.SysRole;
+import com.weiwan.easyboot.model.entity.SysUser;
 import com.weiwan.easyboot.model.enums.DataScope;
+import com.weiwan.easyboot.model.enums.EntityStatus;
+import com.weiwan.easyboot.model.enums.LockType;
+import com.weiwan.easyboot.security.lock.LoginLockService;
+import com.weiwan.easyboot.service.SysUserService;
+import com.weiwan.easyboot.utils.IpUtil;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.weiwan.easyboot.model.dto.UserInfo;
-import com.weiwan.easyboot.service.SysUserService;
-import com.weiwan.easyboot.model.enums.EntityStatus;
-import com.weiwan.easyboot.model.entity.SysMenu;
-import com.weiwan.easyboot.model.entity.SysRole;
-import com.weiwan.easyboot.model.entity.SysUser;
-import com.weiwan.easyboot.exception.BusinessException;
-import com.weiwan.easyboot.utils.IpUtil;
-import lombok.SneakyThrows;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 用户加载逻辑
  *
  * @author xiaozhennan
  */
-public class AdminUserDetailsServiceImpl implements UserDetailsService {
+@Component
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private LoginUserService loginUserService;
     @Autowired
     private SysUserService sysUserService;
     @Autowired
     private FileService fileService;
     @Autowired
-    private LoginSecurityService loginSecurityService;
+    private LoginLockService loginLockService;
 
 
     @SneakyThrows
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        HttpServletRequest request =
-            ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-
+    public LoginUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String remoteIp = IpUtil.getRemoteIp(request);
-        boolean ipLocked = loginSecurityService.getIpLockStrategy().isLocked(remoteIp);
+        boolean ipLocked = loginLockService.getIpLockStrategy().isLocked(remoteIp);
         if (ipLocked) {
             throw new LockedException(LockType.IP.name());
         }
@@ -74,9 +70,9 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
                 throw new UsernameNotFoundException("user not found");
             }
             username = user.getUsername();
-            user.setPassword(AdminPasswordEncoder.NONE_PASSWORD);
+            user.setPassword(PasswordUtil.NONE_PASSWORD);
         } else {
-            boolean locked = loginSecurityService.getUsernameLockStrategy().isLocked(username);
+            boolean locked = loginLockService.getUsernameLockStrategy().isLocked(username);
             if (locked) {
                 throw new LockedException(LockType.USERNAME.name());
             }
@@ -91,16 +87,16 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
         }
 
         // 角色
-        List<SysRole> userRoles = userService.findRolesByUserId(user.getId());
+        List<SysRole> userRoles = loginUserService.findRolesByUserId(user.getId());
 
         UserInfo userInfo = new UserInfo(user.getId(), user.getDeptId(), user.getUsername(), user.getName());
         userInfo.setDeptName(user.getDeptName());
         userInfo.setPhoto(fileService.getUrl(user.getPhoto()));
         userInfo.setDsf(this.getDsf(userRoles, user.getId(), user.getDeptId()));
         // 角色及权限信息登录成功后放入
-        AdminUserDetails adminUserDetails = new AdminUserDetails(userInfo, username, user.getPassword());
-        adminUserDetails.setAuthorities(getAuthorities(userRoles, user.getId()));
-        return adminUserDetails;
+        LoginUserDetails userDetails = new LoginUserDetails(userInfo, username, user.getPassword());
+        userDetails.setAuthorities(getAuthorities(userRoles, user.getId()));
+        return userDetails;
     }
 
 
@@ -109,13 +105,13 @@ public class AdminUserDetailsServiceImpl implements UserDetailsService {
      *
      * @return
      */
-    private List<GrantedAuthority> getAuthorities(List<SysRole> userRoles, Integer userId) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+    private List<UserGrantedAuthority> getAuthorities(List<SysRole> userRoles, Integer userId) {
+        List<UserGrantedAuthority> authorities = new ArrayList<>();
 
         userRoles.stream().filter(v -> StringUtils.isNotBlank(v.getCode())).forEach(v -> {
             authorities.add(new UserGrantedAuthority(v.getCode(), true));
         });
-        List<SysMenu> userMenus = userService.findMenusByUserId(userId);
+        List<SysMenu> userMenus = loginUserService.findMenusByUserId(userId);
         userMenus.stream().filter(v -> StringUtils.isNotBlank(v.getPermission())).forEach(v -> {
             authorities.add(new UserGrantedAuthority(v.getPermission()));
         });
